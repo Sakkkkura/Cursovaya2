@@ -7,6 +7,50 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="0.1*"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
 
+        <ComboBox Grid.Row="0">
+            
+        </ComboBox>
+
+        <ListView Grid.Row="1">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn>
+                        <Border>
+                            <TextBlock Text="Понедельник"/>
+                        </Border>
+                    </GridViewColumn>
+                    <GridViewColumn>
+                        <Border>
+                            <TextBlock Text="Вторник"/>
+                        </Border>
+                    </GridViewColumn>
+                    <GridViewColumn>
+                        <Border>
+                            <TextBlock Text="Среда"/>
+                        </Border>
+                    </GridViewColumn>
+                    <GridViewColumn>
+                        <Border>
+                            <TextBlock Text="Четверг"/>
+                        </Border>
+                    </GridViewColumn>
+                    <GridViewColumn>
+                        <Border>
+                            <TextBlock Text="Пятница"/>
+                        </Border>
+                    </GridViewColumn>
+                    <GridViewColumn>
+                        <Border>
+                            <TextBlock Text="Суббота"/>
+                        </Border>
+                    </GridViewColumn>
+                </GridView>
+            </ListView.View>
+        </ListView>
     </Grid>
 </Window>
