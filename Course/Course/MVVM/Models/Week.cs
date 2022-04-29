@@ -6,11 +6,11 @@ using System.Threading.Tasks;
 
 namespace Course.MVVM.Models
 {
-    public class Subject
+    public class Week
     {
         public int Id { get; set; }
-        public string Name { get; set; } = null!;
-        public int TeacherId { get; set; }
-        public virtual Teacher Teacher { get; set; } = null!;
+        public string DayOfWeek { get; set; } = null!;
+        public int OrderId { get; set; }
+        public virtual Order Order { get; set; } = null!;
     }
 }

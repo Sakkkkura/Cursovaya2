@@ -9,8 +9,6 @@ namespace Course.MVVM.Models
     public class Teacher
     {
         public int Id { get; set; }
-        public string FullName { get; set; }
-        public int SubjectId { get; set; }
-        public virtual Subject Subject { get; set; }
+        public string FullName { get; set; } = null!;
     }
 }
