@@ -255,83 +255,194 @@ namespace Course.Commands
             }
             return result;
         }
-        //редактирование отдел
-        public static string EditDepartment(Department oldDepartment, string newName)
+
+        //удаление преподавателя
+        public static string DeleteTeacher(Teacher teacher)
         {
-            string result = "Такого отела не существует";
+            string result = "Такого преподавателя не существует";
             using (ApplicationContext db = new ApplicationContext())
             {
-                Department department = db.Departments.FirstOrDefault(d => d.Id == oldDepartment.Id);
-                department.Name = newName;
+                db.Teachers.Remove(teacher);
                 db.SaveChanges();
-                result = "Сделано! Отдел " + department.Name + " изменен";
+                result = "Сделано! Преподаватель" + teacher.FullName + " удален";
             }
             return result;
         }
-        //редактирование позицию
-        public static string EditPosition(Position oldPosition, string newName, int newMaxNumber, decimal newSalary, Department newDepartment)
+
+        //удаление недели
+        public static string DeleteWeek(Week week)
         {
-            string result = "Такой позиции не существует";
+            string result = "Такой недели не существует";
             using (ApplicationContext db = new ApplicationContext())
             {
-                Position position = db.Positions.FirstOrDefault(p => p.Id == oldPosition.Id);
-                position.Name = newName;
-                position.Salary = newSalary;
-                position.MaxNumber = newMaxNumber;
-                position.DepartmentId = newDepartment.Id;
+                db.Weeks.Remove(week);
                 db.SaveChanges();
-                result = "Сделано! Позиция " + position.Name + " изменена";
+                result = "Сделано! Неделя удалена";
             }
             return result;
         }
-        //редактирование сотрудника
-        public static string EditUser(User oldUser, string newName, string newSurName, string newPhone, Position newPosition)
+
+        //редактирование группы
+        public static string EditGroup(Group oldGroup, string newName)
         {
-            string result = "Такого сотрудника не существует";
+            string result = "Такой группы не существует";
             using (ApplicationContext db = new ApplicationContext())
             {
-                //check user is exist
-                User user = db.Users.FirstOrDefault(p => p.Id == oldUser.Id);
-                if (user != null)
+                Group group = db.Groups.FirstOrDefault(d => d.Id == oldGroup.Id);
+                group.Name = newName;
+                db.SaveChanges();
+                result = "Сделано! Группа " + group.Name + " изменена";
+            }
+            return result;
+        }
+
+        //редактирование порядка
+        public static string EditOrder(Order oldOrder, int newQueue, Subject newSubject)
+        {
+            string result = "Такого дня не существует";
+            using (ApplicationContext db = new ApplicationContext())
+            {
+                Order order = db.Orders.FirstOrDefault(p => p.Id == oldOrder.Id);
+                order.Queue = newQueue;
+                order.SubjectId = newSubject.Id;
+                db.SaveChanges();
+                result = "Сделано! День изменен";
+            }
+            return result;
+        }
+
+        //редактирование расписания
+        public static string EditSchedule(Schedule oldSchedule, Group newGroup, Week newWeek)
+        {
+            string result = "Такого расписания не существует";
+            using (ApplicationContext db = new ApplicationContext())
+            {
+                Schedule schedule = db.Schedules.FirstOrDefault(p => p.Id == oldSchedule.Id);
+                if (schedule != null)
                 {
-                    user.Name = newName;
-                    user.SurName = newSurName;
-                    user.Phone = newPhone;
-                    user.PositionId = newPosition.Id;
+                    schedule.GroupId = newGroup.Id;
+                    schedule.WeekId = newWeek.Id;
                     db.SaveChanges();
-                    result = "Сделано! Сотрудник " + user.Name + " изменен";
+                    result = "Сделано! Расписание " + schedule.Group.Name + " изменено";
                 }
             }
             return result;
         }
 
-        //получение позиции по id позитиции
-        public static Position GetPositionById(int id)
+        //редактирование предмета
+        public static string EditSubject(Subject oldSubject, string newName, Teacher newTeacher)
+        {
+            string result = "Такого предмета не существует";
+            using (ApplicationContext db = new ApplicationContext())
+            {
+                Subject subject = db.Subjects.FirstOrDefault(p => p.Id == oldSubject.Id);
+                subject.Name = newName;
+                subject.TeacherId = newTeacher.Id;
+                db.SaveChanges();
+                result = "Сделано! Предмет" + subject.Name + " изменен";
+            }
+            return result;
+        }
+
+        //редактирование преподавателя
+        public static string EditTeacher(Teacher oldTeacher, string newFullName)
+        {
+            string result = "Такого преподавателя не существует";
+            using (ApplicationContext db = new ApplicationContext())
+            {
+                Teacher teacher = db.Teachers.FirstOrDefault(p => p.Id == oldTeacher.Id);
+                teacher.FullName = newFullName;
+                db.SaveChanges();
+                result = "Сделано! Предмет" + teacher.FullName + " изменен";
+            }
+            return result;
+        }
+
+        //редактирование недели
+        public static string EditWeek(Week oldWeek, string newDayOfWeek, Order newOrder)
+        {
+            string result = "Такой недели не существует";
+            using (ApplicationContext db = new ApplicationContext())
+            {
+                Week week = db.Weeks.FirstOrDefault(p => p.Id == oldWeek.Id);
+                week.DayOfWeek = newDayOfWeek;
+                week.OrderId = newOrder.Id;
+                db.SaveChanges();
+                result = "Сделано! Предмет" + week.DayOfWeek + " изменен";
+            }
+            return result;
+        }
+
+        //получение группы по id группы
+        public static Group GetGroupById(int id)
         {
             using (ApplicationContext db = new ApplicationContext())
             {
-                Position pos = db.Positions.FirstOrDefault(p => p.Id == id);
+                Group pos = db.Groups.FirstOrDefault(p => p.Id == id);
                 return pos;
             }
         }
-        //получение отдела по id отдела
-        public static Department GetDepartmentById(int id)
+
+        //получение дня по id дня
+        public static Order GetOrderById(int id)
         {
             using (ApplicationContext db = new ApplicationContext())
             {
-                Department pos = db.Departments.FirstOrDefault(p => p.Id == id);
+                Order pos = db.Orders.FirstOrDefault(p => p.Id == id);
                 return pos;
             }
         }
-        //получение всех пользователей по id позиции
-        public static List<User> GetAllUsersByPositionId(int id)
+
+        //получение расписания по id расписания
+        public static Schedule GetScheduleById(int id)
         {
             using (ApplicationContext db = new ApplicationContext())
             {
-                List<User> users = (from user in GetAllUsers() where user.PositionId == id select user).ToList();
-                return users;
+                Schedule pos = db.Schedules.FirstOrDefault(p => p.Id == id);
+                return pos;
             }
         }
+
+        //получение предмета по id предмета
+        public static Subject GetSubjectById(int id)
+        {
+            using (ApplicationContext db = new ApplicationContext())
+            {
+                Subject pos = db.Subjects.FirstOrDefault(p => p.Id == id);
+                return pos;
+            }
+        }
+
+        //получение преподавателя по id преподавателя
+        public static Teacher GetTeacherById(int id)
+        {
+            using (ApplicationContext db = new ApplicationContext())
+            {
+                Teacher pos = db.Teachers.FirstOrDefault(p => p.Id == id);
+                return pos;
+            }
+        }
+
+        //получение недели по id недели
+        public static Week GetWeekById(int id)
+        {
+            using (ApplicationContext db = new ApplicationContext())
+            {
+                Week pos = db.Weeks.FirstOrDefault(p => p.Id == id);
+                return pos;
+            }
+        }
+
+        //получение всех групп по id группы
+        //public static List<Group> GetAllGroupsByGroupId(int id)
+        //{
+        //    using (ApplicationContext db = new ApplicationContext())
+        //    {
+        //        List<Group> groups = (from group in GetAllGroups() where group.GroupId == id select group).ToList();
+        //        return groups;
+        //    }
+        //}
+
         //получение всех позиций по id отдела
         public static List<Position> GetAllPositionsByDepartmentId(int id)
         {
