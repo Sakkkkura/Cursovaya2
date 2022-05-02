@@ -20,7 +20,7 @@ namespace Course.Commands
             }
         }
 
-        //получить весь порядок
+        //получить все дни
         public static List<Order> GetAllOrders()
         {
             using (ApplicationContext db = new ApplicationContext())
@@ -51,7 +51,7 @@ namespace Course.Commands
         }
 
         //получить всех преподавателей
-        public static List<Teacher> GetAlTeachers()
+        public static List<Teacher> GetAllTeachers()
         {
             using (ApplicationContext db = new ApplicationContext())
             {
@@ -89,7 +89,7 @@ namespace Course.Commands
             }
         }
 
-        //содать порядок
+        //содать день
         public static string CreateOrder(int queue, Subject subject)
         {
             string result = "Уже существует";
@@ -217,10 +217,10 @@ namespace Course.Commands
             return result;
         }
 
-        //удаление порядка
+        //удаление дня
         public static string DeleteOrder(Order order)
         {
-            string result = "Такого порядка не существует";
+            string result = "Такого дня не существует";
             using (ApplicationContext db = new ApplicationContext())
             {
                 db.Orders.Remove(order);
@@ -296,7 +296,7 @@ namespace Course.Commands
             return result;
         }
 
-        //редактирование порядка
+        //редактирование дня
         public static string EditOrder(Order oldOrder, int newQueue, Subject newSubject)
         {
             string result = "Такого дня не существует";
@@ -433,23 +433,54 @@ namespace Course.Commands
             }
         }
 
-        //получение всех групп по id группы
-        //public static List<Group> GetAllGroupsByGroupId(int id)
-        //{
-        //    using (ApplicationContext db = new ApplicationContext())
-        //    {
-        //        List<Group> groups = (from group in GetAllGroups() where group.GroupId == id select group).ToList();
-        //        return groups;
-        //    }
-        //}
-
-        //получение всех позиций по id отдела
-        public static List<Position> GetAllPositionsByDepartmentId(int id)
+        //получение всех дней по id предмета
+        public static List<Order> GetAllOrdersBySubjectId(int id)
         {
             using (ApplicationContext db = new ApplicationContext())
             {
-                List<Position> positions = (from position in GetAllPositions() where position.DepartmentId == id select position).ToList();
-                return positions;
+                List<Order> orders = (from order in GetAllOrders() where order.SubjectId == id select order).ToList();
+                return orders;
+            }
+        }
+
+        //получение всех расписаний по id группы
+        public static List<Schedule> GetAllSchedulesByGroupId(int id)
+        {
+            using (ApplicationContext db = new ApplicationContext())
+            {
+                List<Schedule> schedules = (from schedule in GetAllSchedules() where schedule.GroupId == id select schedule).ToList();
+                return schedules;
+            }
+        }
+
+        //получение всех расписаний по id недели
+        public static List<Schedule> GetAllSchedulesByWeekId(int id)
+        {
+            using (ApplicationContext db = new ApplicationContext())
+            {
+                List<Schedule> schedules = (from schedule in GetAllSchedules() where schedule.WeekId == id select schedule).ToList();
+                return schedules;
+            }
+        }
+
+        //получение всех предметов по id преподавателя
+        public static List<Subject> GetAllSubjectsByTeacherId(int id)
+        {
+            using (ApplicationContext db = new ApplicationContext())
+            {
+                List<Subject> subjects = (from subject in GetAllSubjects() where subject.TeacherId == id select subject).ToList();
+                return subjects;
+            }
+        }
+
+        //получение всех недель по id дня
+        public static List<Week> GetAllWeeksByOrderId(int id)
+        {
+            using (ApplicationContext db = new ApplicationContext())
+            {
+                List<Week> weeks = (from week in GetAllWeeks() where week.OrderId == id select
+                 week).ToList();
+                return weeks;
             }
         }
     }
