@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Course.MVVM.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,18 +11,18 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
 using System.Windows.Shapes;
 
 namespace Course.MVVM.Views
 {
-    public partial class MainWindow : Window
+    /// <summary>
+    /// Логика взаимодействия для EditGroupWindow.xaml
+    /// </summary>
+    public partial class EditGroupWindow : Window
     {
-        public static ListView MainWindowListView;
-        public MainWindow()
+        public EditGroupWindow(Group group)
         {
             InitializeComponent();
-            MainWindowListView = MainWindowLV;
         }
     }
 }

@@ -10,18 +10,18 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
 using System.Windows.Shapes;
 
 namespace Course.MVVM.Views
 {
-    public partial class MainWindow : Window
+    /// <summary>
+    /// Логика взаимодействия для AddNewGroupWindow.xaml
+    /// </summary>
+    public partial class AddNewGroupWindow : Window
     {
-        public static ListView MainWindowListView;
-        public MainWindow()
+        public AddNewGroupWindow()
         {
             InitializeComponent();
-            MainWindowListView = MainWindowLV;
         }
     }
 }

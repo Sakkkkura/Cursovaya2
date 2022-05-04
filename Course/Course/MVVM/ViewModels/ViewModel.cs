@@ -1,5 +1,6 @@
 ﻿using Course.Commands;
 using Course.MVVM.Models;
+using Course.MVVM.Views;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -108,6 +109,14 @@ namespace Course.MVVM.ViewModels
         public static int WeekId { get; set; }
         public static string WeekDayOfWeek { get; set; } = null!;
         public static Order WeekOrder { get; set; } = null!;
+        //свойства для выбора
+        public TabItem SelectedTabItem{ get; set; } = null!;
+        public static Group SelectedGroup { get; set; } = null!;
+        public static Order SelectedOrder { get; set; } = null!;
+        public static Schedule SelectedSchedule { get; set; } = null!;
+        public static Subject SelectedSubject { get; set; } = null!;
+        public static Week SelectedWeek { get; set; } = null!;
+        public static Teacher SelectedTeacher { get; set; }=null!;
 
         #region COMMANDS TO ADD
         private RelayCommand addNewGroup;
@@ -339,28 +348,28 @@ namespace Course.MVVM.ViewModels
         #endregion
 
         #region EDIT COMMANDS
-        private RelayCommand editGroup;
-        public RelayCommand EditGroup
+        private RelayCommand editOrder;
+        public RelayCommand EditOrder
         {
             get
             {
-                return editGroup ?? new RelayCommand(obj =>
+                return editOrder ?? new RelayCommand(obj =>
                 {
                     Window window = obj as Window;
-                    string resultStr = "Не выбран сотрудник";
-                    string noPositionStr = "Не выбрана новая должность";
-                    if (SelectedGroup != null)
+                    string resultStr = "Не выбран день";
+                    string noSubjectStr = "Не выбран новый предмет";
+                    if (SelectedOrder != null)
                     {
-                        if (UserPosition != null)
+                        if (OrderSubject != null)
                         {
-                            resultStr = DataWorker.EditUser(SelectedUser, UserName, UserSurName, UserPhone, UserPosition);
+                            resultStr = DataWorker.EditOrder(SelectedOrder, OrderQueue, OrderSubject);
 
                             UpdateAllDataView();
                             SetNullValuesToProperties();
                             ShowMessageToUser(resultStr);
                             window.Close();
                         }
-                        else ShowMessageToUser(noPositionStr);
+                        else ShowMessageToUser(noSubjectStr);
                     }
                     else ShowMessageToUser(resultStr);
 
@@ -368,64 +377,101 @@ namespace Course.MVVM.ViewModels
                 );
             }
         }
-        private RelayCommand editPosition;
-        public RelayCommand EditPosition
+        private RelayCommand editSchedule;
+        public RelayCommand EditSchedule
         {
             get
             {
-                return editPosition ?? new RelayCommand(obj =>
+                return editSchedule ?? new RelayCommand(obj =>
                 {
                     Window window = obj as Window;
-                    string resultStr = "Не выбрана позиция";
-                    string noDepartmentStr = "Не выбран новый отдел";
-                    if (SelectedPosition != null)
+                    string resultStr = "Не выбрано расписание";
+                    string noGroupStr = "Не выбрана новая группа";
+                    string noWeekStr = "Не выбрана новая неделя";
+                    if (SelectedSchedule != null)
                     {
-                        if (PositionDepartment != null)
+                        if (ScheduleGroup != null && ScheduleWeek!= null)
                         {
-                            resultStr = DataWorker.EditPosition(SelectedPosition, PositionName, PositionMaxNumber, PositionSalary, PositionDepartment);
+                            resultStr = DataWorker.EditSchedule(SelectedSchedule, ScheduleGroup, ScheduleWeek);
 
                             UpdateAllDataView();
                             SetNullValuesToProperties();
                             ShowMessageToUser(resultStr);
                             window.Close();
                         }
-                        else ShowMessageToUser(noDepartmentStr);
+                        else ShowMessageToUser(noGroupStr);
                     }
                     else ShowMessageToUser(resultStr);
 
                 }
                 );
             }
-        }
 
-        private RelayCommand editDepartment;
-        public RelayCommand EditDepartment
+        }
+        private RelayCommand editSubject;
+        public RelayCommand EditSubject
         {
             get
             {
-                return editDepartment ?? new RelayCommand(obj =>
+                return editSubject ?? new RelayCommand(obj =>
                 {
                     Window window = obj as Window;
-                    string resultStr = "Не выбран отдел";
-                    if (SelectedDepartment != null)
+                    string resultStr = "Не выбран предмет";
+                    string noTeacherStr = "Не выбран новый преподаватель";
+                    if (SelectedSubject != null)
                     {
-                        resultStr = DataWorker.EditDepartment(SelectedDepartment, DepartmentName);
+                        if (SubjectTeacher != null)
+                        {
+                            resultStr = DataWorker.EditSubject(SelectedSubject, SubjectName, SelectedTeacher);
 
-                        UpdateAllDataView();
-                        SetNullValuesToProperties();
-                        ShowMessageToUser(resultStr);
-                        window.Close();
+                            UpdateAllDataView();
+                            SetNullValuesToProperties();
+                            ShowMessageToUser(resultStr);
+                            window.Close();
+                        }
+                        else ShowMessageToUser(noTeacherStr);
                     }
                     else ShowMessageToUser(resultStr);
 
                 }
                 );
             }
+
+        }
+        private RelayCommand editWeek;
+        public RelayCommand EditWeek
+        {
+            get
+            {
+                return editWeek ?? new RelayCommand(obj =>
+                {
+                    Window window = obj as Window;
+                    string resultStr = "Не выбран предмет";
+                    string noOrderStr = "Не выбран новый преподаватель";
+                    if (SelectedWeek != null)
+                    {
+                        if (WeekOrder != null)
+                        {
+                            resultStr = DataWorker.EditWeek(SelectedWeek, WeekDayOfWeek, WeekOrder);
+
+                            UpdateAllDataView();
+                            SetNullValuesToProperties();
+                            ShowMessageToUser(resultStr);
+                            window.Close();
+                        }
+                        else ShowMessageToUser(noOrderStr);
+                    }
+                    else ShowMessageToUser(resultStr);
+
+                }
+                );
+            }
+
         }
         #endregion
 
         #region COMMANDS TO OPEN WINDOWS
-        private RelayCommand openAddNewDepartmentWnd;
+        private RelayCommand openAddNewGroupWnd;
         public RelayCommand OpenAddNewGroupWnd
         {
             get
@@ -462,7 +508,7 @@ namespace Course.MVVM.ViewModels
             }
         }
         private RelayCommand openAddNewSubjectWnd;
-        public RelayCommand OpenAddNewScheduleWnd
+        public RelayCommand OpenAddNewSubjectWnd
         {
             get
             {
@@ -505,20 +551,35 @@ namespace Course.MVVM.ViewModels
                 return openEditItemWnd ?? new RelayCommand(obj =>
                 {
                     string resultStr = "Ничего не выбрано";
-                    //если сотрудник
-                    if (SelectedTabItem.Name == "UsersTab" && SelectedUser != null)
+                    //если группа
+                    if (SelectedTabItem.Name == "GroupTab" && SelectedGroup != null)
                     {
-                        OpenEditUserWindowMethod(SelectedUser);
+                        OpenEditGroupWindowMethod(SelectedGroup);
                     }
-                    //если позиция
-                    if (SelectedTabItem.Name == "PositionsTab" && SelectedPosition != null)
+                    //если день
+                    if (SelectedTabItem.Name == "OrderTab" && SelectedOrder != null)
                     {
-                        OpenEditPositionWindowMethod(SelectedPosition);
+                        OpenEditOrderWindowMethod(SelectedOrder);
                     }
-                    //если отдел
-                    if (SelectedTabItem.Name == "DepartmentsTab" && SelectedDepartment != null)
+                    //если расписание
+                    if (SelectedTabItem.Name == "ScheduleTab" && SelectedSchedule != null)
                     {
-                        OpenEditDepartmentWindowMethod(SelectedDepartment);
+                        OpenEditScheduleWindowMethod(SelectedSchedule);
+                    }
+                    //если предмет
+                    if (SelectedTabItem.Name == "SubjectTab" && SelectedSubject != null)
+                    {
+                        OpenEditSubjectWindowMethod(SelectedSubject);
+                    }
+                    //если преподаватель
+                    if (SelectedTabItem.Name == "TeacherTab" && SelectedTeacher != null)
+                    {
+                        OpenEditTeacherWindowMethod(SelectedTeacher);
+                    }
+                    //если неделя
+                    if (SelectedTabItem.Name == "WeekTab" && SelectedWeek != null)
+                    {
+                        OpenEditWeekWindowMethod(SelectedWeek);
                     }
                 }
                     );
@@ -530,6 +591,7 @@ namespace Course.MVVM.ViewModels
         //методы открытия окон
         private void OpenAddGroupWindowMethod()
         {
+            
             AddNewGroupWindow newGroupWindow = new AddNewGroupWindow();
             SetCenterPositionAndOpen(newGroupWindow);
         }
@@ -558,6 +620,7 @@ namespace Course.MVVM.ViewModels
             AddNewWeekWindow newWeekWindow = new AddNewWeekWindow();
             SetCenterPositionAndOpen(newWeekWindow);
         }
+
         //окна редактирования
         private void OpenEditGroupWindowMethod(Group group)
         {
@@ -606,56 +669,44 @@ namespace Course.MVVM.ViewModels
         #region UPDATE VIEWS
         private void SetNullValuesToProperties()
         {
-            //для пользователя
-            UserName = null;
-            UserSurName = null;
-            UserPhone = null;
-            UserPosition = null;
-            //для позиции
-            PositionName = null;
-            PositionSalary = 0;
-            PositionMaxNumber = 0;
-            PositionDepartment = null;
-            //для отдела
-            DepartmentName = null;
+            //для группы
+            GroupName = null;
+            //для дня
+            OrderQueue = 0;
+            OrderSubject = null;
+            //для расписания
+            ScheduleGroup = null;
+            ScheduleWeek = null;
+            //для предмета
+            SubjectName = null;
+            SubjectTeacher = null;
+            //для преподавателя
+            TeacherFullName = null;
+            //для недели
+            WeekDayOfWeek = null;
+            WeekOrder = null;
         }
         private void UpdateAllDataView()
         {
-            UpdateAllDepartmentsView();
-            UpdateAllPositionsView();
-            UpdateAllUsersView();
+            UpdateAllSchedulesView();
         }
 
-        private void UpdateAllDepartmentsView()
+
+        private void UpdateAllSchedulesView()
         {
-            AllDepartments = DataWorker.GetAllDepartments();
-            MainWindow.AllDepartmentsView.ItemsSource = null;
-            MainWindow.AllDepartmentsView.Items.Clear();
-            MainWindow.AllDepartmentsView.ItemsSource = AllDepartments;
-            MainWindow.AllDepartmentsView.Items.Refresh();
+            AllSchedules = DataWorker.GetAllSchedules();
+            MainWindow.MainWindowListView.ItemsSource = null;
+            MainWindow.MainWindowListView.Items.Clear();
+            MainWindow.MainWindowListView.ItemsSource = AllSchedules;
+            MainWindow.MainWindowListView.Items.Refresh();
         }
-        private void UpdateAllPositionsView()
-        {
-            AllPositions = DataWorker.GetAllPositions();
-            MainWindow.AllPositionsView.ItemsSource = null;
-            MainWindow.AllPositionsView.Items.Clear();
-            MainWindow.AllPositionsView.ItemsSource = AllPositions;
-            MainWindow.AllPositionsView.Items.Refresh();
-        }
-        private void UpdateAllUsersView()
-        {
-            AllUsers = DataWorker.GetAllUsers();
-            MainWindow.AllUsersView.ItemsSource = null;
-            MainWindow.AllUsersView.Items.Clear();
-            MainWindow.AllUsersView.ItemsSource = AllUsers;
-            MainWindow.AllUsersView.Items.Refresh();
-        }
+        
         #endregion
 
         private void ShowMessageToUser(string message)
         {
-            MessageView messageView = new MessageView(message);
-            SetCenterPositionAndOpen(messageView);
+
+            MessageBox.Show(message, "Уведомление",MessageBoxButton.OK);
         }
         public event PropertyChangedEventHandler PropertyChanged;
 

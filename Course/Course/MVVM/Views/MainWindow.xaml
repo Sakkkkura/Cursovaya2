@@ -16,7 +16,7 @@
             
         </ComboBox>
 
-        <ListView Grid.Row="1">
+        <ListView x:Name="MainWindowLV" Grid.Row="1">
             <ListView.View>
                 <GridView>
                     <GridViewColumn>

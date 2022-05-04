@@ -7,7 +7,7 @@ using System.Windows.Input;
 
 namespace Course.Commands
 {
-    class RelayCommand
+    public class RelayCommand
     {
         private Action<object> _execute;
         private Func<object, bool> _canExecute;
