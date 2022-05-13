@@ -10,6 +10,17 @@ namespace Course.Commands
 {
     public static class DataWorker
     {
+        #region ПОЛУЧИТЬ ВСЕ ...
+        //получить все дни
+        public static List<Day> GetAllDays()
+        {
+            using (ApplicationContext db = new ApplicationContext())
+            {
+                var result = db.Days.ToList();
+                return result;
+            }
+        }
+
         //получить все группы
         public static List<Group> GetAllGroups()
         {
@@ -18,17 +29,7 @@ namespace Course.Commands
                 var result = db.Groups.ToList();
                 return result;
             }
-        }
-
-        //получить все дни
-        public static List<Order> GetAllOrders()
-        {
-            using (ApplicationContext db = new ApplicationContext())
-            {
-                var result = db.Orders.ToList();
-                return result;
-            }
-        }
+        }      
 
         //получить все расписание
         public static List<Schedule> GetAllSchedules()
@@ -69,6 +70,32 @@ namespace Course.Commands
                 return result;
             }
         }
+        #endregion
+
+        #region СОЗДАТЬ ...
+        //создать день
+        public static string CreateDay(Subject FirstSubject, Subject SecondSubject, Subject ThirdSubject)
+        {
+            string result = "Уже существует";
+            using (ApplicationContext db = new ApplicationContext())
+            {
+                //проверяем существует ли день
+                bool checkIsExist = db.Days.Any(el => el.FirstSubject == firstSubject && el.SecondSubject == secondSubject && el.ThirdSubject == thirdSubject);
+                if (!checkIsExist)
+                {
+                    Day newDay = new Day
+                    {
+                        FirstSubjectId = firstSubject.Id,
+                        SecondSubjectId = secondSubject.Id,
+                        ThirdSubjectId = thirdSubject.Id
+                    };
+                    db.Days.Add(newDay);
+                    db.SaveChanges();
+                    result = "Сделано!";
+                }
+                return result;
+            }
+        }
 
         //создать группу
         public static string CreateGroup(string name)
@@ -87,30 +114,7 @@ namespace Course.Commands
                 }
                 return result;
             }
-        }
-
-        //содать день
-        public static string CreateOrder(int queue, Subject subject)
-        {
-            string result = "Уже существует";
-            using (ApplicationContext db = new ApplicationContext())
-            {
-                //проверяем сущесвует ли порядок
-                bool checkIsExist = db.Orders.Any(el => el.Queue == queue && el.Subject == subject);
-                if (!checkIsExist)
-                {
-                    Order newOrder = new Order
-                    {
-                        Queue = queue,
-                        SubjectId = subject.Id
-                    };
-                    db.Orders.Add(newOrder);
-                    db.SaveChanges();
-                    result = "Сделано!";
-                }
-                return result;
-            }
-        }
+        }   
 
         //создать расписание
         public static string CreateSchedule(Group group, Week week)
@@ -182,19 +186,19 @@ namespace Course.Commands
         }
 
         //создать неделю
-        public static string CreateWeek(string dayOfWeek, Order order)
+        public static string CreateWeek(string dayOfWeek, Day day)
         {
             string result = "Уже существует";
             using (ApplicationContext db = new ApplicationContext())
             {
                 //проверяем сущесвует ли неделя
-                bool checkIsExist = db.Weeks.Any(el => el.DayOfWeek == dayOfWeek && el.Order == order);
+                bool checkIsExist = db.Weeks.Any(el => el.DayOfWeek == dayOfWeek && el.Day == day);
                 if (!checkIsExist)
                 {
                     Week newWeek = new Week
                     {
                         DayOfWeek = dayOfWeek,
-                        OrderId = order.Id
+                        DayId = day.Id
                     };
                     db.Weeks.Add(newWeek);
                     db.SaveChanges();
@@ -202,6 +206,21 @@ namespace Course.Commands
                 }
                 return result;
             }
+        }
+        #endregion
+
+        #region УДАЛЕНИЕ ...
+        //удаление дня
+        public static string DeleteDay(Day day)
+        {
+            string result = "Такого дня не существует";
+            using (ApplicationContext db = new ApplicationContext())
+            {
+                db.Days.Remove(day);
+                db.SaveChanges();
+                result = "Сделано! День удален";
+            }
+            return result;
         }
 
         //удаление групп
@@ -213,19 +232,6 @@ namespace Course.Commands
                 db.Groups.Remove(group);
                 db.SaveChanges();
                 result = "Сделано! Группы " + group.Name + " удалена";
-            }
-            return result;
-        }
-
-        //удаление дня
-        public static string DeleteOrder(Order order)
-        {
-            string result = "Такого дня не существует";
-            using (ApplicationContext db = new ApplicationContext())
-            {
-                db.Orders.Remove(order);
-                db.SaveChanges();
-                result = "Сделано! День удален";
             }
             return result;
         }
@@ -281,6 +287,24 @@ namespace Course.Commands
             }
             return result;
         }
+        #endregion
+
+        #region РЕДАКТИРОВАНИЕ ...
+        //редактирование дня
+        public static string EditDay(Day oldDay, Subject FirstSubject, Subject SecondSubject, Subject ThirdSubject)
+        {
+            string result = "Такого дня не существует";
+            using (ApplicationContext db = new ApplicationContext())
+            {
+                Day day = db.Days.FirstOrDefault(p => p.Id == oldDay.Id);
+                day.FirstSubjectId = newFirstSubject.Id;
+                day.FirstSubjectId = newSecondSubject.Id;
+                day.FirstSubjectId = newThirdSubject.Id;
+                db.SaveChanges();
+                result = "Сделано! День изменен";
+            }
+            return result;
+        }
 
         //редактирование группы
         public static string EditGroup(Group oldGroup, string newName)
@@ -292,21 +316,6 @@ namespace Course.Commands
                 group.Name = newName;
                 db.SaveChanges();
                 result = "Сделано! Группа " + group.Name + " изменена";
-            }
-            return result;
-        }
-
-        //редактирование дня
-        public static string EditOrder(Order oldOrder, int newQueue, Subject newSubject)
-        {
-            string result = "Такого дня не существует";
-            using (ApplicationContext db = new ApplicationContext())
-            {
-                Order order = db.Orders.FirstOrDefault(p => p.Id == oldOrder.Id);
-                order.Queue = newQueue;
-                order.SubjectId = newSubject.Id;
-                db.SaveChanges();
-                result = "Сделано! День изменен";
             }
             return result;
         }
@@ -359,18 +368,30 @@ namespace Course.Commands
         }
 
         //редактирование недели
-        public static string EditWeek(Week oldWeek, string newDayOfWeek, Order newOrder)
+        public static string EditWeek(Week oldWeek, string newDayOfWeek, Day newDay)
         {
             string result = "Такой недели не существует";
             using (ApplicationContext db = new ApplicationContext())
             {
                 Week week = db.Weeks.FirstOrDefault(p => p.Id == oldWeek.Id);
                 week.DayOfWeek = newDayOfWeek;
-                week.OrderId = newOrder.Id;
+                week.DayId = newDay.Id;
                 db.SaveChanges();
                 result = "Сделано! Предмет" + week.DayOfWeek + " изменен";
             }
             return result;
+        }
+        #endregion
+
+        #region ПОЛУЧЕНИЕ ... ПО ID ...
+        //получение дня по id дня
+        public static Day GetDayById(int id)
+        {
+            using (ApplicationContext db = new ApplicationContext())
+            {
+                Day pos = db.Days.FirstOrDefault(p => p.Id == id);
+                return pos;
+            }
         }
 
         //получение группы по id группы
@@ -379,16 +400,6 @@ namespace Course.Commands
             using (ApplicationContext db = new ApplicationContext())
             {
                 Group pos = db.Groups.FirstOrDefault(p => p.Id == id);
-                return pos;
-            }
-        }
-
-        //получение дня по id дня
-        public static Order GetOrderById(int id)
-        {
-            using (ApplicationContext db = new ApplicationContext())
-            {
-                Order pos = db.Orders.FirstOrDefault(p => p.Id == id);
                 return pos;
             }
         }
@@ -432,14 +443,16 @@ namespace Course.Commands
                 return pos;
             }
         }
+        #endregion
 
+        #region ПОЛУЧЕНИЕ ВСЕХ ... ПО ID ...
         //получение всех дней по id предмета
-        public static List<Order> GetAllOrdersBySubjectId(int id)
+        public static List<Day> GetAllDaysBySubjectId(int id)
         {
             using (ApplicationContext db = new ApplicationContext())
             {
-                List<Order> orders = (from order in GetAllOrders() where order.SubjectId == id select order).ToList();
-                return orders;
+                List<Day> days = (from day in GetAllDays() where day.SubjectId == id select day).ToList();
+                return days;
             }
         }
 
@@ -478,10 +491,10 @@ namespace Course.Commands
         {
             using (ApplicationContext db = new ApplicationContext())
             {
-                List<Week> weeks = (from week in GetAllWeeks() where week.OrderId == id select
-                 week).ToList();
+                List<Week> weeks = (from week in GetAllWeeks() where week.DayId == id select week).ToList();
                 return weeks;
             }
         }
+        #endregion 
     }
 }

@@ -1,5 +1,7 @@
-﻿using System;
+﻿using Course.Commands;
+using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -13,5 +15,23 @@ namespace Course.MVVM.Models
         public virtual Group Group { get; set; } = null!;
         public int WeekId { get; set; }
         public virtual Week Week { get; set; } = null!;
+
+        [NotMapped]
+        public Group ScheduleGroup
+        {
+            get
+            {
+                return DataWorker.GetGroupById(GroupId);
+            }
+        }
+
+        [NotMapped]
+        public Week ScheduleWeek
+        {
+            get
+            {
+                return DataWorker.GetWeekById(WeekId);
+            }
+        }
     }
 }

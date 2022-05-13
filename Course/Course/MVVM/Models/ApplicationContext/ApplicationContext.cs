@@ -11,7 +11,8 @@ namespace Course.MVVM.Models.ApplicationContext
     public class ApplicationContext : DbContext
     {
         public DbSet<Group> Groups { get; set; }
-        public DbSet<Order> Orders { get; set; }
+        //public DbSet<Order> Orders { get; set; }
+        public DbSet<Day> Days { get; set; }
         public DbSet<Schedule> Schedules { get; set; }
         public DbSet<Subject> Subjects { get; set; }
         public DbSet<Teacher> Teachers { get; set; }

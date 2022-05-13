@@ -26,34 +26,29 @@
         <ListView x:Name="MainWindowLV" Grid.Row="1" ItemsSource="{Binding AllSchedules}">
             <ListView.View>
                 <GridView>
-                    <GridViewColumn DisplayMemberBinding="{Binding Path=Group}">
+                    <GridViewColumn DisplayMemberBinding="{Binding Path=ScheduleGroup.Name}">
                         <Border>
-                            <TextBlock Text="Понедельник"/>
+                            <TextBlock Text="Группа"/>
                         </Border>
                     </GridViewColumn>
-                    <GridViewColumn DisplayMemberBinding="{Binding Path=Week.DayOfWeek}">
+                    <GridViewColumn DisplayMemberBinding="{Binding Path=ScheduleWeek.DayOfWeek}">
                         <Border>
-                            <TextBlock Text="Вторник"/>
+                            <TextBlock Text="День недели"/>
                         </Border>
                     </GridViewColumn>
-                    <GridViewColumn DisplayMemberBinding="{Binding Path=Week.Order.Queue}">
+                    <GridViewColumn DisplayMemberBinding="{Binding Path=ScheduleWeek.WeekOrder.Queue}">
                         <Border>
-                            <TextBlock Text="Среда"/>
+                            <TextBlock Text="Порядок"/>
                         </Border>
                     </GridViewColumn>
-                    <GridViewColumn DisplayMemberBinding="{Binding Path=Week.Order.Subject.Name}">
+                    <GridViewColumn DisplayMemberBinding="{Binding Path=ScheduleWeek.WeekOrder.OrderSubject.Name}">
                         <Border>
-                            <TextBlock Text="Четверг"/>
+                            <TextBlock Text="Дисциплины"/>
                         </Border>
                     </GridViewColumn>
-                    <GridViewColumn DisplayMemberBinding="{Binding Path=Week.Order.Subject.Teacher}">
+                    <GridViewColumn DisplayMemberBinding="{Binding Path=ScheduleWeek.WeekOrder.OrderSubject.SubjectTeacher.FullName}">
                         <Border>
-                            <TextBlock Text="Пятница"/>
-                        </Border>
-                    </GridViewColumn>
-                    <GridViewColumn>
-                        <Border>
-                            <TextBlock Text="Суббота"/>
+                            <TextBlock Text="Преподаватели"/>
                         </Border>
                     </GridViewColumn>
                 </GridView>
