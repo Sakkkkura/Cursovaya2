@@ -16,6 +16,9 @@ namespace Course.MVVM.Models
         public virtual Teacher Teacher { get; set; } = null!;
 
         [NotMapped]
+        public string SubjectTeacherName =>$"{Name}: {SubjectTeacher.FullName}";
+
+        [NotMapped]
         public Teacher SubjectTeacher
         {
             get

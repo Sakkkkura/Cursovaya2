@@ -36,19 +36,19 @@
                             <TextBlock Text="День недели"/>
                         </Border>
                     </GridViewColumn>
-                    <GridViewColumn DisplayMemberBinding="{Binding Path=ScheduleWeek.WeekOrder.Queue}">
+                    <GridViewColumn DisplayMemberBinding="{Binding Path=ScheduleWeek.WeekDay.DayFirstSubject.SubjectTeacherName}">
                         <Border>
-                            <TextBlock Text="Порядок"/>
+                            <TextBlock Text="1 Предмет"/>
                         </Border>
                     </GridViewColumn>
-                    <GridViewColumn DisplayMemberBinding="{Binding Path=ScheduleWeek.WeekOrder.OrderSubject.Name}">
+                    <GridViewColumn DisplayMemberBinding="{Binding Path=ScheduleWeek.WeekDay.DaySecondSubject.SubjectTeacherName}">
                         <Border>
-                            <TextBlock Text="Дисциплины"/>
+                            <TextBlock Text="2 Предмет"/>
                         </Border>
                     </GridViewColumn>
-                    <GridViewColumn DisplayMemberBinding="{Binding Path=ScheduleWeek.WeekOrder.OrderSubject.SubjectTeacher.FullName}">
+                    <GridViewColumn DisplayMemberBinding="{Binding Path=ScheduleWeek.WeekDay.DayThirdSubject.SubjectTeacherName}">
                         <Border>
-                            <TextBlock Text="Преподаватели"/>
+                            <TextBlock Text="3 Предмет"/>
                         </Border>
                     </GridViewColumn>
                 </GridView>

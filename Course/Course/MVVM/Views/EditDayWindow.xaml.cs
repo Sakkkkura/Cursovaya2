@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Course.MVVM.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -19,7 +20,7 @@ namespace Course.MVVM.Views
     /// </summary>
     public partial class EditDayWindow : Window
     {
-        public EditDayWindow()
+        public EditDayWindow(Day day)
         {
             InitializeComponent();
         }

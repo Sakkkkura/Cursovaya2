@@ -92,9 +92,9 @@ namespace Course.MVVM.ViewModels
         #region PROPERTIES
         //свойства для дня
         public static int DayId { get; set; }
-        public static Subject FirstSubject { get; set; } = null!;
-        public static Subject SecondSubject { get; set; } = null!;
-        public static Subject ThirdSubject { get; set; } = null!;
+        public static Subject DayFirstSubject { get; set; } = null!;
+        public static Subject DaySecondSubject { get; set; } = null!;
+        public static Subject DayThirdSubject { get; set; } = null!;
         //свойства для группы
         public static int GroupId { get; set; }
         public static string GroupName { get; set; } = null!;
@@ -368,7 +368,7 @@ namespace Course.MVVM.ViewModels
                     string noSubjectStr = "Не выбран новый предмет";
                     if (SelectedDay != null)
                     {
-                        if (DaySubject != null)
+                        if (DayFirstSubject != null && DaySecondSubject !=null && DayThirdSubject != null)
                         {
                             resultStr = DataWorker.EditDay(SelectedDay, DayFirstSubject, DaySecondSubject, DayThirdSubject);
 
@@ -559,15 +559,15 @@ namespace Course.MVVM.ViewModels
                 return openEditItemWnd ?? new RelayCommand(obj =>
                 {
                     string resultStr = "Ничего не выбрано";
+                    //если день
+                    if (SelectedTabItem.Name == "DayTab" && SelectedDay != null)
+                    {
+                        OpenEditDayWindowMethod(SelectedDay);
+                    }
                     //если группа
                     if (SelectedTabItem.Name == "GroupTab" && SelectedGroup != null)
                     {
                         OpenEditGroupWindowMethod(SelectedGroup);
-                    }
-                    //если день
-                    if (SelectedTabItem.Name == "OrderTab" && SelectedOrder != null)
-                    {
-                        OpenEditOrderWindowMethod(SelectedOrder);
                     }
                     //если расписание
                     if (SelectedTabItem.Name == "ScheduleTab" && SelectedSchedule != null)
@@ -678,9 +678,9 @@ namespace Course.MVVM.ViewModels
         private void SetNullValuesToProperties()
         {
             //для дня
-            SubjectFirstSubject = 0;
-            SubjectSecondSubject = 0;
-            SubjectThirdSubject = 0;
+            DayFirstSubject = null;
+            DaySecondSubject = null;
+            DayThirdSubject = null;
             //для группы
             GroupName = null;
             //для расписания

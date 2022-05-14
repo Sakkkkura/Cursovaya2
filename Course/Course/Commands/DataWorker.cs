@@ -74,7 +74,7 @@ namespace Course.Commands
 
         #region СОЗДАТЬ ...
         //создать день
-        public static string CreateDay(Subject FirstSubject, Subject SecondSubject, Subject ThirdSubject)
+        public static string CreateDay(Subject firstSubject, Subject secondSubject, Subject thirdSubject)
         {
             string result = "Уже существует";
             using (ApplicationContext db = new ApplicationContext())
@@ -291,7 +291,7 @@ namespace Course.Commands
 
         #region РЕДАКТИРОВАНИЕ ...
         //редактирование дня
-        public static string EditDay(Day oldDay, Subject FirstSubject, Subject SecondSubject, Subject ThirdSubject)
+        public static string EditDay(Day oldDay, Subject newFirstSubject, Subject newSecondSubject, Subject newThirdSubject)
         {
             string result = "Такого дня не существует";
             using (ApplicationContext db = new ApplicationContext())
@@ -447,14 +447,14 @@ namespace Course.Commands
 
         #region ПОЛУЧЕНИЕ ВСЕХ ... ПО ID ...
         //получение всех дней по id предмета
-        public static List<Day> GetAllDaysBySubjectId(int id)
-        {
-            using (ApplicationContext db = new ApplicationContext())
-            {
-                List<Day> days = (from day in GetAllDays() where day.SubjectId == id select day).ToList();
-                return days;
-            }
-        }
+        //public static List<Day> GetAllDaysBySubjectId(int firstId)
+        //{
+        //    using (ApplicationContext db = new ApplicationContext())
+        //    {
+        //        List<Day> days = (from day in GetAllDays() where day. == firstId select day).ToList();
+        //        return days;
+        //    }
+        //}
 
         //получение всех расписаний по id группы
         public static List<Schedule> GetAllSchedulesByGroupId(int id)
