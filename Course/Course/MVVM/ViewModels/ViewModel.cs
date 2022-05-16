@@ -45,7 +45,7 @@ namespace Course.MVVM.ViewModels
         public List<Schedule> AllSchedules
         {
             get { return allSchedules; }
-            private set
+            set
             {
                 allSchedules = value;
                 NotifyPropertyChanged("AllSchedules");
@@ -57,7 +57,7 @@ namespace Course.MVVM.ViewModels
         public List<Subject> AllSubjects
         {
             get { return allSubjects; }
-            private set
+            set
             {
                 allSubjects = value;
                 NotifyPropertyChanged("AllSubjects");
@@ -69,7 +69,7 @@ namespace Course.MVVM.ViewModels
         public List<Teacher> AllTeachers
         {
             get { return allTeachers; }
-            private set
+            set
             {
                 allTeachers = value;
                 NotifyPropertyChanged("AllTeachers");
@@ -81,10 +81,22 @@ namespace Course.MVVM.ViewModels
         public List<Week> AllWeeks
         {
             get { return allWeeks; }
-            private set
+            set
             {
                 allWeeks = value;
                 NotifyPropertyChanged("AllWeeks");
+            }
+        }
+
+        //все недели по группам
+        private List<Schedule> allSchedulesByGroupId;
+        public List<Schedule> AllSchedulesByGroupId
+        {
+            get { return allSchedulesByGroupId; }
+            set
+            {
+                allSchedulesByGroupId = value;
+                NotifyPropertyChanged("AllSchedulesByGroupId");
             }
         }
         #endregion
@@ -123,6 +135,7 @@ namespace Course.MVVM.ViewModels
         public static Teacher SelectedTeacher { get; set; }=null!;
         #endregion
 
+
         #region COMMANDS TO ADD
         private RelayCommand addNewDay;
         public RelayCommand AddNewDay
@@ -135,15 +148,15 @@ namespace Course.MVVM.ViewModels
                     string resultStr = "";
                     if (DayFirstSubject == null)
                     {
-                        SetRedBlockControll(wnd, "FirstSubjectBlock");
+                        MessageBox.Show("Ошибка");
                     }
                     if (DaySecondSubject == null)
                     {
-                        SetRedBlockControll(wnd, "SecondSubjectBlock");
+                        MessageBox.Show("Ошибка");
                     }
                     if (DayThirdSubject == null)
                     {
-                        SetRedBlockControll(wnd, "ThirdSubjectBlock");
+                        MessageBox.Show("Ошибка");
                     }
                     else
                     {
@@ -169,7 +182,7 @@ namespace Course.MVVM.ViewModels
                     string resultStr = "";
                     if (GroupName == null || GroupName.Replace(" ", "").Length == 0)
                     {
-                        SetRedBlockControll(wnd, "NameBlock");
+                        MessageBox.Show("Ошибка");
                     }
                     else
                     {
@@ -195,11 +208,11 @@ namespace Course.MVVM.ViewModels
                     string resultStr = "";
                     if (ScheduleGroup == null)
                     {
-                        SetRedBlockControll(wnd, "GroupBlock");
+                        MessageBox.Show("Ошибка");
                     }
                     if (ScheduleWeek == null)
                     {
-                        SetRedBlockControll(wnd, "WeekBlock");
+                        MessageBox.Show("Ошибка");
                     }
                     else
                     {
@@ -225,11 +238,11 @@ namespace Course.MVVM.ViewModels
                     string resultStr = "";
                     if (SubjectName == null || SubjectName.Replace(" ", "").Length == 0)
                     {
-                        SetRedBlockControll(wnd, "NameBlock");
+                        MessageBox.Show("Ошибка");
                     }
                     if (SubjectTeacher == null)
                     {
-                        SetRedBlockControll(wnd, "TeacherBlock");
+                        MessageBox.Show("Ошибка");
                     }
                     else
                     {
@@ -255,7 +268,7 @@ namespace Course.MVVM.ViewModels
                     string resultStr = "";
                     if (TeacherFullName == null || TeacherFullName.Replace(" ", "").Length == 0)
                     {
-                        SetRedBlockControll(wnd, "FullNameBlock");
+                        MessageBox.Show("Ошибка");
                     }
                     else
                     {
@@ -281,11 +294,11 @@ namespace Course.MVVM.ViewModels
                     string resultStr = "";
                     if (WeekDayOfWeek == null || WeekDayOfWeek.Replace(" ", "").Length == 0)
                     {
-                        SetRedBlockControll(wnd, "DayOfWeekBlock");
+                        MessageBox.Show("Ошибка");
                     }
-                    if (WeekDay == null)
+                    else if (WeekDay == null)
                     {
-                        SetRedBlockControll(wnd, "DayBlock");
+                        MessageBox.Show("Ошибка");
                     }
                     else
                     {
@@ -668,11 +681,6 @@ namespace Course.MVVM.ViewModels
         }
         #endregion
 
-        private void SetRedBlockControll(Window wnd, string blockName)
-        {
-            Control block = wnd.FindName(blockName) as Control;
-            block.BorderBrush = Brushes.Red;
-        }
 
         #region UPDATE VIEWS
         private void SetNullValuesToProperties()
@@ -726,5 +734,7 @@ namespace Course.MVVM.ViewModels
                 PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
             }
         }
+
+
     }
 }

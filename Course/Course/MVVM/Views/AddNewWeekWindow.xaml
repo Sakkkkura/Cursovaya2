@@ -4,9 +4,26 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Course.MVVM.Views"
+        xmlns:viewModels="clr-namespace:Course.MVVM.ViewModels"
         mc:Ignorable="d"
-        Title="AddNewWeekWindow" Height="450" Width="800">
+        Title="AddNewWeekWindow" Height="450" Width="800" x:Name="AddWeekW">
+    <Window.DataContext>
+        <viewModels:AddNewWeekViewModel/>
+    </Window.DataContext>
+    
     <Grid>
-        
+        <StackPanel>
+            <ComboBox SelectedItem="{Binding WeekDay}" ItemsSource="{Binding AllDays}" DisplayMemberPath="AllSubjectNames"/>
+            <ComboBox SelectedItem="{Binding WeekDayOfWeek}">
+                <ComboBoxItem Content="Понедельник"/>
+                <ComboBoxItem Content="Вторник"/>
+                <ComboBoxItem Content="Среда"/>
+                <ComboBoxItem Content="Четверг"/>
+                <ComboBoxItem Content="Пятница"/>
+                <ComboBoxItem Content="Суббота"/>
+            </ComboBox>
+            <Button Content="Добавить" Command="{Binding AddNewWeek}"
+                CommandParameter="{Binding ElementName=AddWeekW}"/>
+        </StackPanel>
     </Grid>
 </Window>

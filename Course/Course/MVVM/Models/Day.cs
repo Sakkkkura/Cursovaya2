@@ -19,6 +19,9 @@ namespace Course.MVVM.Models
         public virtual Subject ThirdSubject { get; set; } = null!;
 
         [NotMapped]
+        public string AllSubjectNames => $"1: {DayFirstSubject.Name}; 2: {DaySecondSubject.Name}; 3: {DayThirdSubject.Name};";
+
+        [NotMapped]
         public Subject DayFirstSubject
         {
             get
