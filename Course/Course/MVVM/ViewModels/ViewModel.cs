@@ -571,37 +571,39 @@ namespace Course.MVVM.ViewModels
             {
                 return openEditItemWnd ?? new RelayCommand(obj =>
                 {
+                    
                     string resultStr = "Ничего не выбрано";
+                    
                     //если день
-                    if (SelectedTabItem.Name == "DayTab" && SelectedDay != null)
+                    //if (SelectedTabItem.Name == "DayTab" && SelectedDay != null)
                     {
                         OpenEditDayWindowMethod(SelectedDay);
                     }
-                    //если группа
-                    if (SelectedTabItem.Name == "GroupTab" && SelectedGroup != null)
-                    {
-                        OpenEditGroupWindowMethod(SelectedGroup);
-                    }
-                    //если расписание
-                    if (SelectedTabItem.Name == "ScheduleTab" && SelectedSchedule != null)
-                    {
-                        OpenEditScheduleWindowMethod(SelectedSchedule);
-                    }
-                    //если предмет
-                    if (SelectedTabItem.Name == "SubjectTab" && SelectedSubject != null)
-                    {
-                        OpenEditSubjectWindowMethod(SelectedSubject);
-                    }
-                    //если преподаватель
-                    if (SelectedTabItem.Name == "TeacherTab" && SelectedTeacher != null)
-                    {
-                        OpenEditTeacherWindowMethod(SelectedTeacher);
-                    }
-                    //если неделя
-                    if (SelectedTabItem.Name == "WeekTab" && SelectedWeek != null)
-                    {
-                        OpenEditWeekWindowMethod(SelectedWeek);
-                    }
+                    ////если группа
+                    //if (SelectedTabItem.Name == "GroupTab" && SelectedGroup != null)
+                    //{
+                    //    OpenEditGroupWindowMethod(SelectedGroup);
+                    //}
+                    ////если расписание
+                    //if (SelectedTabItem.Name == "ScheduleTab" && SelectedSchedule != null)
+                    //{
+                    //    OpenEditScheduleWindowMethod(SelectedSchedule);
+                    //}
+                    ////если предмет
+                    //if (SelectedTabItem.Name == "SubjectTab" && SelectedSubject != null)
+                    //{
+                    //    OpenEditSubjectWindowMethod(SelectedSubject);
+                    //}
+                    ////если преподаватель
+                    //if (SelectedTabItem.Name == "TeacherTab" && SelectedTeacher != null)
+                    //{
+                    //    OpenEditTeacherWindowMethod(SelectedTeacher);
+                    //}
+                    ////если неделя
+                    //if (SelectedTabItem.Name == "WeekTab" && SelectedWeek != null)
+                    //{
+                    //    OpenEditWeekWindowMethod(SelectedWeek);
+                    //}
                 }
                     );
             }

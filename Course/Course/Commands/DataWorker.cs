@@ -298,8 +298,8 @@ namespace Course.Commands
             {
                 Day day = db.Days.FirstOrDefault(p => p.Id == oldDay.Id);
                 day.FirstSubjectId = newFirstSubject.Id;
-                day.FirstSubjectId = newSecondSubject.Id;
-                day.FirstSubjectId = newThirdSubject.Id;
+                day.SecondSubjectId = newSecondSubject.Id;
+                day.ThirdSubjectId = newThirdSubject.Id;
                 db.SaveChanges();
                 result = "Сделано! День изменен";
             }

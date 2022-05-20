@@ -4,9 +4,20 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Course.MVVM.Views"
+        xmlns:viewModels="clr-namespace:Course.MVVM.ViewModels"
         mc:Ignorable="d"
-        Title="EditDayWindow" Height="450" Width="800">
+        Title="EditDayWindow" Height="450" Width="800" x:Name="EditDayW">
+    <Window.DataContext>
+        <viewModels:EditDayViewModel/>
+    </Window.DataContext>
     <Grid>
-        
+        <StackPanel>
+            <ComboBox SelectedItem="{Binding SelectedDay}" ItemsSource="{Binding AllDays}" DisplayMemberPath="AllSubjectNames"/>
+            <ComboBox SelectedItem="{Binding DayFirstSubject}" ItemsSource="{Binding AllSubjects}" DisplayMemberPath="Name"/>
+            <ComboBox SelectedItem="{Binding DaySecondSubject}" ItemsSource="{Binding AllSubjects}" DisplayMemberPath="Name"/>
+            <ComboBox SelectedItem="{Binding DayThirdSubject}" ItemsSource="{Binding AllSubjects}" DisplayMemberPath="Name"/>
+            <Button Content="Изменить" Command="{Binding EditDay}"
+                CommandParameter="{Binding ElementName=EditDayW}"/>
+        </StackPanel>
     </Grid>
 </Window>

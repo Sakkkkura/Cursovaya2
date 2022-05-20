@@ -21,7 +21,7 @@
             ItemsSource="{Binding AllGroups}"
             DisplayMemberPath="Name"
             SelectedItem="{Binding SelectedGroup}" Grid.ColumnSpan="2"/>
-            <Button Grid.Column="1" Content="Открыть" Command="{Binding OpenAddNewScheduleWnd}"/>
+            <Button Grid.Column="1" Content="Открыть" Command="{Binding OpenEditItemWnd}"/>
             <Button Grid.Column="2" Content="Выбрать" Command="{Binding SortGroupList}"/>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
