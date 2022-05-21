@@ -4,9 +4,17 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Course.MVVM.Views"
+        xmlns:viewModels="clr-namespace:Course.MVVM.ViewModels"
         mc:Ignorable="d"
-        Title="EditGroupWindow" Height="450" Width="800">
+        Title="EditGroupWindow" Height="450" Width="800" x:Name="EditGroupW">
+    <Window.DataContext>
+        <viewModels:EditGroupViewModel/>
+    </Window.DataContext>
     <Grid>
-        
+        <StackPanel>
+            <ComboBox SelectedItem="{Binding SelectedGroup}" ItemsSource="{Binding AllGroups}" DisplayMemberPath="AllGroupNames"/>
+            <Button Content="Изменить" Command="{Binding EditGroup}"
+                CommandParameter="{Binding ElementName=EditGroupW}"/>
+        </StackPanel>
     </Grid>
 </Window>

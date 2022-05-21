@@ -13,7 +13,6 @@ namespace Course.MVVM.ViewModels
 {
     public class MainViewModel : ViewModel
     {
-
         public RelayCommand SortGroupList
         {
             get
@@ -25,12 +24,26 @@ namespace Course.MVVM.ViewModels
                 );
             }
         }
+
         private void UpdateListView()
         {
             MainWindow.MainWindowListView.ItemsSource = null;
             MainWindow.MainWindowListView.Items.Clear();
             MainWindow.MainWindowListView.ItemsSource = DataWorker.GetAllSchedulesByGroupId(SelectedGroup.Id);
             MainWindow.MainWindowListView.Items.Refresh();
+        }
+
+        private RelayCommand _windowOpenCommand;
+
+        public RelayCommand WindowOpenCommand
+        {
+            get
+            {
+                return _windowOpenCommand ?? new RelayCommand(obj =>
+                {
+
+                });
+            }
         }
     }
 }

@@ -30,8 +30,6 @@
             </Grid.ColumnDefinitions>
         </Grid>
 
-
-
         <ListView x:Name="MainWindowLV" Grid.Row="1" ItemsSource="{Binding AllSchedulesByGroupId}">
             <ListView.View>
                 <GridView>

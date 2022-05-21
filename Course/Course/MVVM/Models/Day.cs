@@ -29,6 +29,7 @@ namespace Course.MVVM.Models
                 return DataWorker.GetSubjectById(FirstSubjectId);
             }
         }
+
         [NotMapped]
         public Subject DaySecondSubject
         {
@@ -37,6 +38,7 @@ namespace Course.MVVM.Models
                 return DataWorker.GetSubjectById(SecondSubjectId);
             }
         }
+
         [NotMapped]
         public Subject DayThirdSubject
         {
