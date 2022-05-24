@@ -397,6 +397,38 @@ namespace Course.MVVM.ViewModels
                 );
             }
         }
+
+        private RelayCommand editGroup;
+        public RelayCommand EditGroup
+        {
+            get
+            {
+                return editGroup ?? new RelayCommand(obj =>
+                {
+                    Window window = obj as Window;
+                    string resultStr = "Не выбрана группа";
+                    string noGroupStr = "Не выбрана новая группа";
+                    if (SelectedGroup != null)
+                    {
+                        if (GroupName != null)
+                        {
+                            resultStr = DataWorker.EditGroup(SelectedGroup, GroupName);
+
+                            UpdateAllDataView();
+                            SetNullValuesToProperties();
+                            ShowMessageToUser(resultStr);
+                            window.Close();
+                        }
+                        else ShowMessageToUser(noGroupStr);
+                    }
+                    else ShowMessageToUser(resultStr);
+
+                }
+                );
+            }
+
+        }
+
         private RelayCommand editSchedule;
         public RelayCommand EditSchedule
         {
@@ -571,42 +603,37 @@ namespace Course.MVVM.ViewModels
                 return openEditItemWnd ?? new RelayCommand(obj =>
                 {
                     
-                    string resultStr = "Ничего не выбрано";
-                    
-                    /*
-                    //если день
-                    if (SelectedTabItem.Name == "DayTab" && SelectedDay != null)
-                    {
-                        OpenEditDayWindowMethod(SelectedDay);
-                    }
-                    */
-                    //если группа
-                    
-                   // if (SelectedTabItem.Name == "Grouptab" && SelectedGroup != null)
-                   // /{
-                        OpenEditGroupWindowMethod(SelectedGroup);
-                   // }
-                    /*
-                    //если расписание
-                    if (SelectedTabItem.Name == "Scheduletab" && SelectedSchedule != null)
-                    {
+                    //string resultStr = "Ничего не выбрано";
+                    ////если день
+                    //if (SelectedTabItem.Name == "DayTab" && SelectedDay != null)
+                    //{
+                    //    OpenEditDayWindowMethod(SelectedDay);
+                    //}                   
+                    ////если группа
+                    //if (SelectedTabItem.Name == "Grouptab" && SelectedGroup != null)
+                    //{
+                    //    OpenEditGroupWindowMethod(SelectedGroup);
+                    //}
+                    ////если расписание
+                    //if (SelectedTabItem.Name == "Scheduletab" && SelectedSchedule != null)
+                    //{
                         OpenEditScheduleWindowMethod(SelectedSchedule);
-                    }
-                    //если предмет
-                    if (SelectedTabItem.Name == "Subjecttab" && SelectedSubject != null)
-                    {
-                        OpenEditSubjectWindowMethod(SelectedSubject);
-                    }
-                    //если преподаватель
-                    if (SelectedTabItem.Name == "Teachertab" && SelectedTeacher != null)
-                    {
-                        OpenEditTeacherWindowMethod(SelectedTeacher);
-                    }
-                    //если неделя
-                    if (SelectedTabItem.Name == "Weektab" && SelectedWeek != null)
-                    {
-                        OpenEditWeekWindowMethod(SelectedWeek);
-                    }*/
+                    //}
+                    ////если предмет
+                    //if (SelectedTabItem.Name == "Subjecttab" && SelectedSubject != null)
+                    //{
+                    //    OpenEditSubjectWindowMethod(SelectedSubject);
+                    //}
+                    ////если преподаватель
+                    //if (SelectedTabItem.Name == "Teachertab" && SelectedTeacher != null)
+                    //{
+                    //    OpenEditTeacherWindowMethod(SelectedTeacher);
+                    //}
+                    ////если неделя
+                    //if (SelectedTabItem.Name == "Weektab" && SelectedWeek != null)
+                    //{
+                    //    OpenEditWeekWindowMethod(SelectedWeek);
+                    //}
                 }
                     );
             }
@@ -710,8 +737,8 @@ namespace Course.MVVM.ViewModels
         private void UpdateAllDataView()
         {
             UpdateAllSchedulesView();
+            UpdateComboBoxItems();
         }
-
 
         private void UpdateAllSchedulesView()
         {
@@ -721,7 +748,15 @@ namespace Course.MVVM.ViewModels
             MainWindow.MainWindowListView.ItemsSource = AllSchedules;
             MainWindow.MainWindowListView.Items.Refresh();
         }
-        
+
+        private void UpdateComboBoxItems()
+        {
+            
+            MainWindow.MainWindowComboBox.ItemsSource = null;
+            MainWindow.MainWindowComboBox.Items.Clear();
+            MainWindow.MainWindowComboBox.ItemsSource = DataWorker.GetAllGroups();
+            MainWindow.MainWindowComboBox.Items.Refresh();
+        }
         #endregion
 
         private void ShowMessageToUser(string message)

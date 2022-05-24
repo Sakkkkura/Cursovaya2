@@ -4,9 +4,19 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Course.MVVM.Views"
+        xmlns:viewModels="clr-namespace:Course.MVVM.ViewModels"
         mc:Ignorable="d"
-        Title="EditScheduleWindow" Height="450" Width="800">
+        Title="EditScheduleWindow" Height="450" Width="800" x:Name="EditScheduleW">
+    <Window.DataContext>
+        <viewModels:EditScheduleViewModel/>
+    </Window.DataContext>
     <Grid>
-        
+        <StackPanel>
+            <ComboBox SelectedItem="{Binding SelectedSchedule}" ItemsSource="{Binding AllSchedules}" DisplayMemberPath=""/>
+            <ComboBox SelectedItem="{Binding ScheduleGroup}" ItemsSource="{Binding AllSchedules}" DisplayMemberPath="Name"/>
+            <ComboBox SelectedItem="{Binding ScheduleWeek}" ItemsSource="{Binding AllSchedules}" DisplayMemberPath=""/>
+            <Button Content="Изменить" Command="{Binding EditSchedule}"
+                CommandParameter="{Binding ElementName=EditScheduleW}"/>
+        </StackPanel>
     </Grid>
 </Window>

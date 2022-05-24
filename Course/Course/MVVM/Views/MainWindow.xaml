@@ -16,7 +16,7 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         <Grid Grid.Row="0">
-            <ComboBox 
+            <ComboBox Name="MainWindowCB"
             Grid.Row="0" 
             ItemsSource="{Binding AllGroups}"
             DisplayMemberPath="Name"

@@ -22,6 +22,10 @@ namespace Course.MVVM.Views
         {
             InitializeComponent();
             MainWindowListView = MainWindowLV;
+            MainWindowComboBox = MainWindowCB;
         }
+
+        public static ComboBox MainWindowComboBox;
+
     }
 }

@@ -12,7 +12,9 @@
     </Window.DataContext>
     <Grid>
         <StackPanel>
-            <ComboBox SelectedItem="{Binding SelectedGroup}" ItemsSource="{Binding AllGroups}" DisplayMemberPath="AllGroupNames"/>
+            <ComboBox SelectedItem="{Binding SelectedGroup}" ItemsSource="{Binding AllGroups}" DisplayMemberPath="Name"/>
+            <TextBox Text="{Binding GroupName}" Grid.Row="1"
+                   Margin="30"/>
             <Button Content="Изменить" Command="{Binding EditGroup}"
                 CommandParameter="{Binding ElementName=EditGroupW}"/>
         </StackPanel>
